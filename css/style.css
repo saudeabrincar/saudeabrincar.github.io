@@ -38,7 +38,6 @@ body {
     bottom: 20px;
     transition: all 0.3s ease;
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
-    mix-blend-mode: multiply;
     z-index: 5;
 }
 
@@ -49,7 +48,7 @@ body {
 
 .dialogue-box {
     position: absolute;
-    bottom: 30px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -63,7 +62,7 @@ body {
     display: none;
     z-index: 20;
     border: 3px solid var(--secondary-color);
-    animation: slideUp 0.3s ease-out;
+    animation: slideDown 0.3s ease-out;
 }
 
 .dialogue-box.active {
@@ -129,10 +128,10 @@ body {
     }
 }
 
-@keyframes slideUp {
+@keyframes slideDown {
     from {
         opacity: 0;
-        transform: translate(-50%, 20px);
+        transform: translate(-50%, -20px);
     }
 
     to {

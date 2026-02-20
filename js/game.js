@@ -45,8 +45,8 @@ const scenes = {
         bg: 'url("assets/hospital_entrance.png")',
         render: () => `
             <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.9); z-index:0;"></div>
-            <img id="lourenco-brave" class="character" src="assets/lourenco_isolated.png" style="left: 35%;" alt="Lourenço Corajoso">
-            <div class="title-screen" style="z-index:20;">
+            <img id="lourenco-brave" class="character" src="assets/lourenco_isolated.png" style="left: 50%; transform: translateX(-50%); height: 400px; bottom: 20px;" alt="Lourenço Corajoso">
+            <div class="title-screen" style="z-index:20; top: 25%;">
                 <h1>Parabéns!</h1>
                 <p>O Lourenço está cheio de coragem e o medo desapareceu!</p>
                 <button class="next-button" onclick="location.reload()">Jogar Novamente</button>
