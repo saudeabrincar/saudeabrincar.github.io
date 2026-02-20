@@ -37,7 +37,7 @@ const scenes = {
             
             <div id="dialogue2" class="dialogue-box">
                 <p id="dialogue-text2"></p>
-                <button id="dialogue-btn2" class="next-button" style="display:none;" onclick="startMiniGame()">Preparar o Soro!</button>
+                <button id="dialogue-btn2" class="next-button" style="display:none;" onclick="startMiniGame()">Continuar</button>
             </div>
         `
     },
@@ -83,10 +83,10 @@ function loadScene(sceneName) {
     gameContainer.innerHTML = scene.render();
 
     if (sceneName === 'scene1') {
-        setTimeout(() => showDialogue('dialogue', 'dialogue-text', dialogues.scene1[0], 'nextDialogueSequence()'), 500);
+        setTimeout(() => showDialogue('dialogue', 'dialogue-text', dialogues.scene1[0], 'nextDialogueSequence()', 'Continuar'), 500);
     } else if (sceneName === 'scene2') {
         dialogueIndex = 0;
-        setTimeout(() => showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[0], 'nextDialogueScene2()'), 500);
+        setTimeout(() => showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[0], 'nextDialogueScene2()', 'Continuar'), 500);
     }
 }
 
@@ -95,7 +95,7 @@ function startGame() {
 }
 
 // Dialogue System
-function showDialogue(boxId, textId, text, nextAction) {
+function showDialogue(boxId, textId, text, nextAction, btnText) {
     const box = document.getElementById(boxId);
     const textEl = document.getElementById(textId);
     const btn = box.querySelector('button');
@@ -106,6 +106,7 @@ function showDialogue(boxId, textId, text, nextAction) {
     if (nextAction) {
         btn.style.display = 'inline-block';
         btn.setAttribute('onclick', nextAction);
+        if (btnText) btn.innerText = btnText;
     } else {
         btn.style.display = 'none';
     }
@@ -114,7 +115,7 @@ function showDialogue(boxId, textId, text, nextAction) {
 function nextDialogueSequence() {
     dialogueIndex++;
     if (dialogueIndex < 2) {
-        showDialogue('dialogue', 'dialogue-text', dialogues.scene1[dialogueIndex], 'nextDialogueSequence()');
+        showDialogue('dialogue', 'dialogue-text', dialogues.scene1[dialogueIndex], 'nextDialogueSequence()', 'Continuar');
     } else if (dialogueIndex === 2) {
         showDialogue('dialogue', 'dialogue-text', dialogues.scene1[dialogueIndex], null);
     }
@@ -131,9 +132,9 @@ function talkToGhost() {
 function nextDialogueScene2() {
     dialogueIndex++;
     if (dialogueIndex < dialogues.scene2.length - 1) {
-        showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[dialogueIndex], 'nextDialogueScene2()');
+        showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[dialogueIndex], 'nextDialogueScene2()', 'Continuar');
     } else {
-        showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[dialogueIndex], 'startMiniGame()');
+        showDialogue('dialogue2', 'dialogue-text2', dialogues.scene2[dialogueIndex], 'startMiniGame()', 'Preparar o Soro!');
     }
 }
 
