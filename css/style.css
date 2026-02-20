@@ -194,3 +194,67 @@ body {
     color: #666;
     margin-bottom: 20px;
 }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #game-container {
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    #lourenco {
+        height: 250px;
+        left: 5%;
+    }
+
+    #ghost {
+        height: 180px;
+        right: 5%;
+    }
+
+    #anesthesiologist {
+        height: 300px;
+        left: 5%;
+    }
+
+    #serum-bag {
+        height: 280px;
+        right: 5%;
+    }
+
+    .dialogue-box {
+        width: 90%;
+        top: 20px;
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .title-screen {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .title-screen h1 {
+        font-size: 1.8rem;
+    }
+
+    .title-screen p {
+        font-size: 1rem;
+    }
+}
+@media (max-width: 480px) {
+    #lourenco {
+        height: 200px;
+    }
+
+    #ghost {
+        height: 150px;
+    }
+
+    #anesthesiologist {
+        height: 250px;
+    }
+
+    #serum-bag {
+        height: 220px;
+    }
+}
