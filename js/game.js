@@ -3,6 +3,8 @@ const gameContainer = document.getElementById('game-container');
 // State
 let currentScene = 'title';
 let magicCollected = 0;
+let sparklesData = [];
+let animationFrameId;
 
 // Content Definition
 const scenes = {
@@ -142,21 +144,78 @@ function nextDialogueScene2() {
 function startMiniGame() {
     document.getElementById('dialogue2').classList.remove('active');
     magicCollected = 0;
+    sparklesData = [];
 
     for (let i = 0; i < 5; i++) {
         spawnSparkle();
     }
+
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    animateSparkles();
+}
+
+function animateSparkles() {
+    if (currentScene !== 'scene2' || magicCollected >= 5) return;
+
+    const maxX = gameContainer.offsetWidth - 30; // 30 is approx sparkle width
+    const maxY = gameContainer.offsetHeight - 30;
+
+    sparklesData.forEach(s => {
+        s.x += s.dx;
+        s.y += s.dy;
+
+        // Bounce off walls
+        if (s.x <= 0) { s.x = 0; s.dx *= -1; }
+        if (s.x >= maxX) { s.x = maxX; s.dx *= -1; }
+        if (s.y <= 0) { s.y = 0; s.dy *= -1; }
+        if (s.y >= maxY) { s.y = maxY; s.dy *= -1; }
+
+        // Random erratic direction changes
+        if (Math.random() < 0.05) {
+            s.dx += (Math.random() - 0.5) * 3;
+            s.dy += (Math.random() - 0.5) * 3;
+
+            // Limit maximum and minimum speed to keep it fun and slow for kids
+            const speed = Math.sqrt(s.dx * s.dx + s.dy * s.dy);
+            if (speed > 1.0) {
+                s.dx = (s.dx / speed) * 1.0;
+                s.dy = (s.dy / speed) * 1.0;
+            } else if (speed < 0.3) {
+                s.dx = (s.dx / speed) * 0.3;
+                s.dy = (s.dy / speed) * 0.3;
+            }
+        }
+
+        // Map to integer strings for performance and cleanly apply styles
+        s.element.style.left = Math.round(s.x) + 'px';
+        s.element.style.top = Math.round(s.y) + 'px';
+    });
+
+    animationFrameId = requestAnimationFrame(animateSparkles);
 }
 
 function spawnSparkle() {
     const sparkle = document.createElement('div');
     sparkle.className = 'sparkle';
-    sparkle.style.left = Math.random() * (gameContainer.offsetWidth - 50) + 'px';
-    sparkle.style.top = Math.random() * (gameContainer.offsetHeight - 200) + 'px'; // Keep above dialogue area
+
+    let x = Math.random() * (gameContainer.offsetWidth - 50);
+    // Give them full container height minus some padding to spawn
+    let y = Math.random() * (gameContainer.offsetHeight - 100);
+
+    // Initial velocity
+    let dx = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.5);
+    let dy = (Math.random() > 0.5 ? 1 : -1) * (0.2 + Math.random() * 0.5);
+
+    sparkle.style.left = x + 'px';
+    sparkle.style.top = y + 'px';
+
+    const sparkleObj = { element: sparkle, x: x, y: y, dx: dx, dy: dy };
+    sparklesData.push(sparkleObj);
 
     sparkle.onclick = function () {
         this.classList.add('fade-out');
         magicCollected++;
+        sparklesData = sparklesData.filter(s => s !== sparkleObj);
         checkMiniGameWin();
         setTimeout(() => this.remove(), 500);
     };
