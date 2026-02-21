@@ -9,8 +9,8 @@ const scenes = {
     title: {
         render: () => `
             <div class="title-screen">
-                <h1>Lourenço e o Soro Mágico</h1>
-                <p>Uma aventura para enfrentar o medo no hospital!</p>
+                <h1 style="font-size: 2rem;">O LOURENÇO FOI OPERADO<br>E O MEDO É QUE FICOU ASSUSTADO…</h1>
+                <p style="font-size: 1.5rem; font-weight: bold;">SABES O QUE ACONTECEU?<br>O MEDO ENCOLHEU!</p>
                 <button class="next-button" onclick="startGame()">Começar Aventura</button>
             </div>
             <img src="assets/hospital_entrance.png" style="width:100%; height:100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -1;">
